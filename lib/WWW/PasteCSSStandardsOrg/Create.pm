@@ -3,7 +3,7 @@ package WWW::PasteCSSStandardsOrg::Create;
 use warnings;
 use strict;
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 use Carp;
 use WWW::Mechanize;
 use base 'Class::Data::Accessor';
@@ -293,6 +293,35 @@ Javascript code
 XML (XHTML) code
 
 =back
+
+=head2 error
+
+    $paster->paste( 'text to paste' )
+        or die $paster->error;
+
+If an error occured during
+the call to C<paste()> method it will return either C<undef> or an empty list
+depending on the context and the error will be available via C<error()>.
+Takes no arguments, returns a human parsable message explaining why
+C<paste()> failed.
+
+=head2 uri
+
+    my $last_uri = $paster->uri;
+
+Must be called after a successfull call to C<paste()>. Takes no arguments,
+returns a L<URI> object poiting to the newly created
+paste, i.e. the return value of the last call to C<paste()>.
+
+=head2 mech
+
+    my $old_mech = $paster->mech;
+
+    $paster->mech( WWW::Mechanize->new( agent => 'blah' ) );
+
+Returns a L<WWW::Mechanize> object used for pasting. When called with an
+optional argument (which must be a L<WWW::Mechanize> object) will use it
+in any subsequent C<paste()> calls.
 
 =head1 AUTHOR
 
